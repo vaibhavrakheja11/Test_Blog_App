@@ -7,6 +7,7 @@ namespace BlogApp
     public class ViewController : MonoBehaviour
     {
         public LoginController m_loginController;
+        public HomeScreenController m_homeScreenController;
     }
 }
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace BlogApp
 {    public class APIHandler : MonoBehaviour
@@ -13,6 +14,10 @@ namespace BlogApp
                 "MTVISE09IiwiaXNzIjoiaHR0cDovL2Ntcy5pdmVyc29mdC5jYSIsImlhdCI6MTYxMTA4NzY"+
                 "yNCwiZXhwIjoxNjExMTE2NDI0LCJuYmYiOjE2MTEwODc2MjQsImp0aSI6IjZWVUU5cDJhVWN3VXpBV3UifQ.OCa6XhRZ5OhQ7H-XgI4WgwWM0rsmBk5GZnfa8zGJAkc";
         ResponseData m_authData = new ResponseData();
+
+        BlogsDataResponse m_blogsDataResponse = new BlogsDataResponse();
+
+        public Action<BlogsDataResponse> GenerateBlogCards;
 
         public void HandleLoginEvent()
         {
@@ -81,7 +86,37 @@ namespace BlogApp
         {
             Debug.Log(response.Data);
         }
-        
+        public void HandleAllBlogsEvent()
+        {
+            // send a get request
+            //StartCoroutine(AppController.Instance.m_restWebClient.HttpGet($"{baseUrl}", (r) => OnRequestComplete(r)));
+
+            // setup the request heade
+            RequestHeader header2 = new RequestHeader {
+                Key = "Accept",
+                Value = "application/json"
+            };
+
+            RequestHeader header3 = new RequestHeader {
+                Key = "Authorization",
+                Value = m_apiKey
+            };
+
+            // TODO:: Send parameters in here in place of argument string
+            // send a post request
+            StartCoroutine(AppController.Instance.m_restWebClient.HttpGet($"{m_baseUrl}api/blog/list", 
+            (r) => OnBlogsRecieved(r), new List<RequestHeader> {header2,header3}));
+        }
+
+        void OnBlogsRecieved(Response response)
+        {
+            Debug.Log(response.Data);
+            m_blogsDataResponse = JsonUtility.FromJson<BlogsDataResponse>(response.Data);
+            Debug.Log(m_blogsDataResponse.data[1].image.file_sizes.original.url);
+
+            GenerateBlogCards.Invoke(m_blogsDataResponse);
+
+        }
     }
 
     public class SignUpCredentials
