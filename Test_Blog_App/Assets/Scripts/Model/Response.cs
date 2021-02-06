@@ -32,11 +32,60 @@ namespace BlogApp
         public string role;
         public string name;
         public string email;
-        public string m_createdAt;
-        public string m_updatedAt;
+        public string createdAt;
+        public string updatedAt;
         public string gender;
     }
 
-    
+    [Serializable] 
+    public class BlogsDataResponse
+    {
+        public int offset;
+        public int limit;
+        public int total;
+        public int remaining;
+        public BlogsData[] data;
+    }
+
+
+    [Serializable] 
+    public class BlogsData
+    {
+        public int id;
+        public string author;
+
+        public string title;
+        public string content;
+        public string created_at;
+        public string updated_at;
+        public string published;
+        public int views;
+        public User author_user;
+        public Image image;
+        
+    }
+
+    [Serializable] 
+    public class Image
+    {
+        public int id;
+        public int blog_post_id;
+        public string file_location;
+        public int user_profile_id;
+        public string original_name;
+        public FileSize file_sizes;
+    }
+
+    [Serializable] 
+    public class FileSize 
+    {
+       public Original original;
+    }
+
+    [Serializable] 
+    public class Original 
+    {
+       public string url;
+    }
 }
 
