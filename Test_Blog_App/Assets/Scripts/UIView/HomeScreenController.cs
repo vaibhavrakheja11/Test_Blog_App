@@ -72,19 +72,19 @@ namespace BlogApp
 
         public void GenerateItem(GameObject scrollContent, ScrollScript scrollScript, int num)
         {   
+            Debug.Log("Scope is here");
             if(LoaderObject.active)
             {
                 LoaderObject.SetActive(false);
                 Footer.SetActive(true);
             }
 
-
-            GameObject scrollItemObj = Instantiate(scrollItemPrefab);
-            scrollItemObj.transform.SetParent(scrollContent.transform, false);
-            SpawnItem spawnItem = scrollItemObj.GetComponent<SpawnItem>();
-            spawnItem.m_blogData = m_blogsDataResponse.data[num];
             if(m_blogsDataResponse.data[num].image != null)
             {
+                GameObject scrollItemObj = Instantiate(scrollItemPrefab);
+                scrollItemObj.transform.SetParent(scrollContent.transform, false);
+                SpawnItem spawnItem = scrollItemObj.GetComponent<SpawnItem>();
+                spawnItem.m_blogData = m_blogsDataResponse.data[num];
                try 
                 {
                     StartCoroutine(setImage(m_blogsDataResponse.data[num].image.file_sizes.thumb.url, m_blogsDataResponse.data[num], spawnItem));
@@ -117,6 +117,29 @@ namespace BlogApp
                 AppController.Instance.m_viewController.m_blogScreenController.gameObject.SetActive(true);
             }
             AppController.Instance.m_viewController.m_blogScreenController.ShowDetails(blogsData, texture);
+        }
+
+        public void HandleUserButton()
+        {
+            AppController.Instance.m_viewController.m_loginController.gameObject.SetActive(true);
+            this.gameObject.SetActive(false);
+        }
+
+        public void HandleNewBlogButton()
+        {
+            ResponseData authData = AppController.Instance.m_apiHandler.GetAuthorizedData();
+            if(authData.token != null)
+            {
+                Debug.Log("-----x" + authData.token);
+                AppController.Instance.m_viewController.m_createBlogController.gameObject.SetActive(true);
+                this.gameObject.SetActive(false);
+
+            }
+            else
+            {
+                AppController.Instance.m_viewController.m_loginController.gameObject.SetActive(true);
+                this.gameObject.SetActive(false);
+            }
         }
 
 

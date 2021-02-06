@@ -19,7 +19,7 @@ namespace BlogApp
     [Serializable] 
     public class ResponseData
     {
-        public string token;
+        public string token = null;
         public string expires;
         public User user;
         

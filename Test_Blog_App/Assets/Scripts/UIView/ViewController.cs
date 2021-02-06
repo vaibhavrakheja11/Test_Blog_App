@@ -9,6 +9,7 @@ namespace BlogApp
         public LoginController m_loginController;
         public HomeScreenController m_homeScreenController;
         public BlogDetailsController m_blogScreenController;
+        public CreateBlogController m_createBlogController;
     }
 }
 

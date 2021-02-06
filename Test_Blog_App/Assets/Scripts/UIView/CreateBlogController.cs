@@ -18,10 +18,31 @@ namespace BlogApp
 
         Texture2D m_ImageTexture;
         byte[] bytes;
+
+        void OnEnable()
+        {
+            AppController.Instance.m_apiHandler.GetNewBlogData += HandleNewBlog;
+        }
         public void HandleCreateBlog()
         {
             AppController.Instance.m_apiHandler.CreateBlog(bytes,m_title,m_content);
         }
+
+        void HandleNewBlog(BlogsData blog = null)
+        {
+            if(blog.image!=null)
+            {
+                AppController.Instance.m_viewController.m_homeScreenController.gameObject.SetActive(true);
+                this.gameObject.SetActive(false);
+            }
+        }
+        
+        public void HandleDiscardBlog()
+        {
+            AppController.Instance.m_viewController.m_homeScreenController.gameObject.SetActive(true);
+            this.gameObject.SetActive(false);
+        }
+
 
         public void PickImage( int maxSize = 480 )
         {
@@ -40,7 +61,7 @@ namespace BlogApp
 
                     var tex = new Texture2D( 480,480, TextureFormat.RGB24, false );
                     tex = duplicateTexture(texture);
-                    m_ImageTexture = tex;
+                    m_ImageTexture = tex;  
                     bytes = tex.EncodeToPNG();
                     UpDatepLaceholderImage();
                 }
