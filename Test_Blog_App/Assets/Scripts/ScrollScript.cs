@@ -9,36 +9,42 @@ namespace BlogApp
     {
         public ScrollRect scrollView;
         public GameObject scrollContent;
+        int m_pageNumber;
 
-        public GameObject scrollItemPrefab;
 
-        public int totalBoxes;
+        // TODO : Make it event Action script
+
+        [SerializeField]
+        HomeScreenController m_homePageController = new HomeScreenController();
+
+        public int BlogCards = 0;
 
         public bool UpdateViewport = false;
+        int m_counter = 0;
 
         void Start()
         {
-            NextPage();
+            AppController.Instance.m_apiHandler.GenerateBlogCards += StartLoader;
         }
 
         // Start is called before the first frame update
-        void NextPage()
+        public void NextPage()
         {
-            totalBoxes += 10;
-            for(int a = 0; a <= totalBoxes; a++)
+            BlogCards += 5;
+            for(; m_counter < BlogCards; m_counter++)
             {
-                GenerateItem();
+                Debug.Log("Mcounter -------> "+ m_counter);
+                m_homePageController.GenerateItem(scrollContent, this, m_counter);
             }
-            scrollView.verticalNormalizedPosition = 1;
+            scrollView.verticalNormalizedPosition = 0.1f;
             UpdateViewport = false;
-            
         }
 
         // Update is called once per frame
         void Update()
         {
-            Debug.Log(scrollView.verticalNormalizedPosition);
-            if(scrollView.verticalNormalizedPosition < 0)
+            //Debug.Log(scrollView.verticalNormalizedPosition);
+            if(scrollView.verticalNormalizedPosition < 0 && scrollView.verticalNormalizedPosition > -0.5 )
             {
                 UpdateViewport = true;
             } 
@@ -48,11 +54,17 @@ namespace BlogApp
             }
         }
 
-        void GenerateItem()
+        void StartLoader(BlogsDataResponse blogsDataResponse = null)
         {
-            GameObject scrollItemObj = Instantiate(scrollItemPrefab);
-            scrollItemObj.transform.SetParent(scrollContent.transform, false);
+            StartCoroutine(Loader());
         }
+        IEnumerator Loader()
+        {
+            yield return new WaitForSeconds(6f);
+            NextPage();
+        }
+
+        
     }
 }
 
