@@ -34,11 +34,29 @@ namespace BlogApp
             m_viewsText.text = blogData.views.ToString();
             m_authorText.text = blogData.author_user.name.ToString();
             m_contentsText.text = blogData.content.ToString();
+            
+            if(blogData.image != null)
+            {
+                StartCoroutine(UpdateImage(blogData.image.file_sizes.original.url));
+            }
+                
         }
 
         public void HandleCloseModal()
         {
             this.gameObject.SetActive(false);
+        }
+
+        IEnumerator UpdateImage(string url)
+        {
+            WWW www = new WWW(url);
+            yield return www;
+
+            Texture2D texture = new Texture2D(www.texture.width, www.texture.height, TextureFormat.DXT1, false);
+            www.LoadImageIntoTexture(texture);
+            m_rawImage.texture = texture;
+            www.Dispose();
+            www = null;
         }
         
 
