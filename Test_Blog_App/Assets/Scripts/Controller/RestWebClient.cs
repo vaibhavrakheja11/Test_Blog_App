@@ -56,11 +56,7 @@ namespace BlogApp
                     }
                 }
 
-                webRequest.uploadHandler.contentType = defaultContentType;
-
-                //webRequest.uploadHandler = new UploadHandlerRaw(System.Text.Encoding.UTF8.GetBytes(form));
-               
-                
+                webRequest.uploadHandler.contentType = defaultContentType;               
 
                 yield return webRequest.SendWebRequest();
 
