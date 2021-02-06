@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Networking;
+using System.IO;
 
 namespace BlogApp
 {    public class APIHandler : MonoBehaviour
@@ -68,7 +70,6 @@ namespace BlogApp
             form.AddField("name", "Iber2");
             form.AddField("email", "unity02@iversoft.ca");
             form.AddField("password", "Iversoft");
-
             Debug.Log(JsonUtility.ToJson(new SignUpCredentials { name = "test01", email = "unity01@iversoft.ca" , password = "Ivers0ft" }));
 
             // TODO:: Send parameters in here in place of argument string
@@ -114,6 +115,47 @@ namespace BlogApp
             m_blogsDataResponse = JsonUtility.FromJson<BlogsDataResponse>(response.Data);
             GenerateBlogCards.Invoke(m_blogsDataResponse);
 
+        }
+
+        public void CreateBlog(byte[] bytes, string title, string content)
+        {
+            // For testing purposes, also write to a file in the project folder
+            File.WriteAllBytes(Application.dataPath + "/../SavedScreen.png", bytes);
+            
+
+
+            // Create a Web Form
+            WWWForm form = new WWWForm();
+            form.AddField("title", "Iber04");
+            form.AddField("content", "Iber04");
+            form.AddField("published", 1);
+            form.AddBinaryData("picture", bytes,"name.png","image/png");
+
+            // setup the request header
+            RequestHeader header2 = new RequestHeader {
+                Key = "Accept",
+                Value = "application/json"
+            };
+
+
+            RequestHeader header3 = new RequestHeader {
+                Key = "Authorization",
+                Value = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEyOCwiaXNzIjoiaHR0cDovL2Ntcy5pdmVyc29mdC5jYS9hcGkvYXV0aGVudGljYXRlIiwiaWF"+
+                "0IjoxNjEyNTk0ODQ0LCJleHAiOjE2MTI2MjM2NDQsIm5iZiI6MTYxMjU5NDg0NCwianRpIjoiSlZTemFxYjVNc0RQemNRNyJ9.BviMm1szjz5w7x7QV6HO-xH-EGehxlrhGe1U2IqUsOU"
+            };
+
+            RequestHeader header = new RequestHeader {
+                Key = "User",
+                Value = "128"
+            };
+
+            StartCoroutine(AppController.Instance.m_restWebClient.HttpPost($"{m_baseUrl}api/blog/new", 
+            (r) => OnCreateBlogComplete(r), new List<RequestHeader> {header2,header3,header}, form));
+        }
+
+        void OnCreateBlogComplete(Response response)
+        {
+            Debug.Log(response.Data);
         }
     }
 
