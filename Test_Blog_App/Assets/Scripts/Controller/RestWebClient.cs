@@ -9,10 +9,18 @@ namespace BlogApp
     {
         private const string defaultContentType = "application/json";
 
-        public IEnumerator HttpGet(string url, System.Action<Response> callback)
+        public IEnumerator HttpGet(string url, System.Action<Response> callback, IEnumerable<RequestHeader> headers = null)
         {
             using(UnityWebRequest webRequest = UnityWebRequest.Get(url))
             {
+                if(headers != null)
+                {
+                    foreach (RequestHeader header in headers)
+                    {
+                        webRequest.SetRequestHeader(header.Key, header.Value);
+                    }
+                }
+                
                 yield return webRequest.SendWebRequest();
                 
                 if(webRequest.isNetworkError){
