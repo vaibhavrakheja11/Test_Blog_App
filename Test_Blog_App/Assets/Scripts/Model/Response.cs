@@ -80,10 +80,18 @@ namespace BlogApp
     public class FileSize 
     {
        public Original original;
+       public Thumb thumb;
+
     }
 
     [Serializable] 
     public class Original 
+    {
+       public string url;
+    }
+
+    [Serializable]
+    public class Thumb 
     {
        public string url;
     }

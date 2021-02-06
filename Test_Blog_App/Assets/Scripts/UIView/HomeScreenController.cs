@@ -87,7 +87,7 @@ namespace BlogApp
             {
                try 
                 {
-                    StartCoroutine(setImage(m_blogsDataResponse.data[num].image.file_sizes.original.url, m_blogsDataResponse.data[num], spawnItem));
+                    StartCoroutine(setImage(m_blogsDataResponse.data[num].image.file_sizes.thumb.url, m_blogsDataResponse.data[num], spawnItem));
                 }
                 catch
                 {
