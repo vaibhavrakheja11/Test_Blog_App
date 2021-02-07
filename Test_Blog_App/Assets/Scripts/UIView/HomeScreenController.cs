@@ -42,6 +42,11 @@ namespace BlogApp
             currentObject.SetActive(true);
         }
 
+        public void ReturnToHomeScreen()
+        {
+            AppController.Instance.m_apiHandler.HandleAllBlogsEvent();
+        }
+
         public void GenerateCards(BlogsDataResponse blogsDataResponse)
         {
             m_blogsDataResponse =  blogsDataResponse;
@@ -85,13 +90,13 @@ namespace BlogApp
                 SpawnItem spawnItem = scrollItemObj.GetComponent<SpawnItem>();
                 spawnItem.m_blogData = m_blogsDataResponse.data[num];
                 try 
-                    {
-                        StartCoroutine(setImage(m_blogsDataResponse.data[num].image.file_sizes.thumb.url, m_blogsDataResponse.data[num], spawnItem));
-                    }
-                    catch
-                    {
+                {
+                    StartCoroutine(setImage(m_blogsDataResponse.data[num].image.file_sizes.thumb.url, m_blogsDataResponse.data[num], spawnItem));
+                }
+                catch
+                {
 
-                    }
+                }
             }
         }
 
@@ -129,10 +134,8 @@ namespace BlogApp
             ResponseData authData = AppController.Instance.m_apiHandler.GetAuthorizedData();
             if(authData.token != null)
             {
-                Debug.Log("-----x" + authData.token);
                 AppController.Instance.m_viewController.m_createBlogController.gameObject.SetActive(true);
                 this.gameObject.SetActive(false);
-
             }
             else
             {
@@ -140,8 +143,6 @@ namespace BlogApp
                 this.gameObject.SetActive(false);
             }
         }
-
-
         
     }
 }

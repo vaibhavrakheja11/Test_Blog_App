@@ -33,17 +33,15 @@ namespace BlogApp
             BlogCards += 5;
             for(; m_counter < BlogCards; m_counter++)
             {
-                Debug.Log("Mcounter -------> "+ m_counter);
                 m_homePageController.GenerateItem(scrollContent, this, m_counter);
             }
-            scrollView.verticalNormalizedPosition = 0.1f;
             UpdateViewport = false;
         }
 
         // Update is called once per frame
         void Update()
         {
-            //Debug.Log(scrollView.verticalNormalizedPosition);
+            Debug.Log(scrollView.verticalNormalizedPosition);
             if(scrollView.verticalNormalizedPosition < 0 && scrollView.verticalNormalizedPosition > -0.5 )
             {
                 UpdateViewport = true;
@@ -52,6 +50,11 @@ namespace BlogApp
             {
                 NextPage();
             }
+
+            // if(scrollView.verticalNormalizedPosition > 1.1 && scrollView.verticalNormalizedPosition < 1.3 )
+            // {
+            //     AppController.Instance.m_viewController.m_homeScreenController.ReturnToHomeScreen();
+            // } 
         }
 
         void StartLoader(BlogsDataResponse blogsDataResponse = null)
