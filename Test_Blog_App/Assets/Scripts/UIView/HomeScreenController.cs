@@ -85,14 +85,14 @@ namespace BlogApp
                 scrollItemObj.transform.SetParent(scrollContent.transform, false);
                 SpawnItem spawnItem = scrollItemObj.GetComponent<SpawnItem>();
                 spawnItem.m_blogData = m_blogsDataResponse.data[num];
-               try 
-                {
-                    StartCoroutine(setImage(m_blogsDataResponse.data[num].image.file_sizes.thumb.url, m_blogsDataResponse.data[num], spawnItem));
-                }
-                catch
-                {
+                try 
+                    {
+                        StartCoroutine(setImage(m_blogsDataResponse.data[num].image.file_sizes.thumb.url, m_blogsDataResponse.data[num], spawnItem));
+                    }
+                    catch
+                    {
 
-                }
+                    }
             }
         }
 
