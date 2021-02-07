@@ -8,7 +8,6 @@ namespace BlogApp
     public class HomeScreenController : MonoBehaviour
     {
         
-
         RawImage m_displayPicture;
 
         public GameObject Content;

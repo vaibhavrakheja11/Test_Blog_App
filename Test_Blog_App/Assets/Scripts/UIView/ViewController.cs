@@ -10,6 +10,7 @@ namespace BlogApp
         public HomeScreenController m_homeScreenController;
         public BlogDetailsController m_blogScreenController;
         public CreateBlogController m_createBlogController;
+        public ErrorUIController m_errorUIController;
     }
 }
 
