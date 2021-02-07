@@ -74,6 +74,7 @@ namespace BlogApp
             if(authData.token != null)
             {
                 AppController.Instance.m_viewController.m_homeScreenController.gameObject.SetActive(true);
+                AppController.Instance.m_viewController.m_homeScreenController.RefreshHomeScreen();
                 this.gameObject.SetActive(false);
             }
             

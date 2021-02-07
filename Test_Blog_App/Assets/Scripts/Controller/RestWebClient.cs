@@ -33,7 +33,6 @@ namespace BlogApp
                 if(webRequest.isDone)
                 {
                     string data = System.Text.Encoding.UTF8.GetString(webRequest.downloadHandler.data);
-                    Debug.Log("Data: " + data);
                     callback(new Response {
                         StatusCode = webRequest.responseCode,
                         Error = webRequest.error,

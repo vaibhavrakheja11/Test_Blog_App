@@ -84,8 +84,17 @@ namespace BlogApp
 
         void OnLoginAuthComplete(Response response)
         {   
-            m_authData = JsonUtility.FromJson<ResponseData>(response.Data);
-            GetAuthData.Invoke(m_authData);
+            if(response.Error!=null)
+            {
+                Debug.Log(response.Error);
+                AppController.Instance.m_viewController.m_errorUIController.ShowError(response.Error.ToString());
+            }
+            else
+            {
+                m_authData = JsonUtility.FromJson<ResponseData>(response.Data);
+                GetAuthData.Invoke(m_authData);
+            }
+            
         }
 
         public ResponseData GetAuthorizedData()
@@ -95,8 +104,17 @@ namespace BlogApp
 
         void OnSignUpComplete(Response response)
         {
-            m_authData = JsonUtility.FromJson<ResponseData>(response.Data);
-            GetAuthData.Invoke(m_authData);
+            if(response.Error!=null)
+            {
+                Debug.Log(response.Error);
+                AppController.Instance.m_viewController.m_errorUIController.ShowError(response.Error.ToString());
+            }
+            else
+            {
+                m_authData = JsonUtility.FromJson<ResponseData>(response.Data);
+                GetAuthData.Invoke(m_authData);
+            }
+            
         }
         public void HandleAllBlogsEvent()
         {
@@ -120,10 +138,16 @@ namespace BlogApp
 
         void OnBlogsRecieved(Response response)
         {
-            Debug.Log(response.Data);
-            m_blogsDataResponse = JsonUtility.FromJson<BlogsDataResponse>(response.Data);
-            GenerateBlogCards.Invoke(m_blogsDataResponse);
-
+            if(response.Error!=null)
+            {
+                Debug.Log(response.Error);
+                AppController.Instance.m_viewController.m_errorUIController.ShowError(response.Error.ToString());
+            }
+            else
+            {
+                m_blogsDataResponse = JsonUtility.FromJson<BlogsDataResponse>(response.Data);
+                GenerateBlogCards.Invoke(m_blogsDataResponse);
+            }
         }
 
         public void CreateBlog(byte[] bytes, string title, string content)
@@ -158,10 +182,17 @@ namespace BlogApp
 
         void OnCreateBlogComplete(Response response)
         {
-            BlogsData blogData = JsonUtility.FromJson<BlogsData>(response.Data);
-            if(blogData.image != null )
+            if(response.Error!=null)
             {
-                GetNewBlogData.Invoke(blogData);
+                AppController.Instance.m_viewController.m_errorUIController.ShowError(response.Error.ToString());
+            }
+            else
+            {
+                BlogsData blogData = JsonUtility.FromJson<BlogsData>(response.Data);
+                if(blogData.image != null )
+                {
+                    GetNewBlogData.Invoke(blogData);
+                }
             }
         }
     }
