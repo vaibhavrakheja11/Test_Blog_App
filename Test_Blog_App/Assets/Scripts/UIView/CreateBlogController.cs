@@ -17,17 +17,27 @@ namespace BlogApp
         string m_content;
 
         Texture2D m_ImageTexture;
+
+        // refernce to convert image in bytes
         byte[] bytes;
 
+        // Set up event for an action
         void OnEnable()
         {
             AppController.Instance.m_apiHandler.GetNewBlogData += HandleNewBlog;
         }
+
+        /// <summary>
+        /// This method is responsible for submitting new blog to web service
+        /// </summary>
         public void HandleCreateBlog()
         {
             AppController.Instance.m_apiHandler.CreateBlog(bytes,m_title,m_content);
         }
 
+        /// <summary>
+        /// Event associted to action of new blog creation
+        /// </summary>
         void HandleNewBlog(BlogsData blog = null)
         {
             if(blog.image!=null)
@@ -37,14 +47,19 @@ namespace BlogApp
                 this.gameObject.SetActive(false);
             }
         }
-        
+
+        /// <summary>
+        /// This method is responsible for close button in create new blog screen
+        /// </summary>
         public void HandleDiscardBlog()
         {
             AppController.Instance.m_viewController.m_homeScreenController.gameObject.SetActive(true);
             this.gameObject.SetActive(false);
         }
 
-
+        /// <summary>
+        /// This method is responsible for selecting an image from the native gallery app
+        /// </summary>
         public void PickImage( int maxSize = 480 )
         {
             NativeGallery.Permission permission = NativeGallery.GetImageFromGallery( ( path ) =>
@@ -71,6 +86,9 @@ namespace BlogApp
             Debug.Log( "Permission result: " + permission );
         }
 
+        /// <summary>
+        /// This method is responsible for returning a new texture from the selected image
+        /// </summary>
         Texture2D duplicateTexture(Texture2D source)
         {
             RenderTexture renderTex = RenderTexture.GetTemporary(
@@ -91,26 +109,41 @@ namespace BlogApp
             return readableText;
         }
         
+        /// <summary>
+        /// This method is responsible for setting Title
+        /// </summary>
         public void SetTitle(string title)
         {
             m_title = title;
         }
 
+        /// <summary>
+        /// This method is responsible for setting content
+        /// </summary>
         public void SetContent(string content)
         {
             m_content = content;
         }
 
+         /// <summary>
+        /// This method is responsible for setting image
+        /// </summary>
         public void UpDatepLaceholderImage()
         {
             m_rawImage.texture = m_ImageTexture;
         }
 
+         /// <summary>
+        /// This method is responsible for getiing title
+        /// </summary>
         public string GetTitle()
         {
             return m_title;
         }
 
+         /// <summary>
+        /// This method is responsible for getting content
+        /// </summary>
         public string GetContent()
         {
             return m_content;

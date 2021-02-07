@@ -7,12 +7,17 @@ namespace BlogApp
 {
     public class RestWebClient : MonoBehaviour
     {
-        private const string defaultContentType = "application/json";
+        const string defaultContentType = "application/json";
 
+        /// <summary>
+        ///Generic template for a HTTP Get request to the restful GET API
+        /// </summary>
         public IEnumerator HttpGet(string url, System.Action<Response> callback, IEnumerable<RequestHeader> headers = null)
         {
+            // create object og UnityWebRequest
             using(UnityWebRequest webRequest = UnityWebRequest.Get(url))
             {
+                // Set headers
                 if(headers != null)
                 {
                     foreach (RequestHeader header in headers)
@@ -21,8 +26,10 @@ namespace BlogApp
                     }
                 }
                 
+                // wait for result
                 yield return webRequest.SendWebRequest();
                 
+                // subsequent checks to determine network error
                 if(webRequest.isNetworkError){
                     callback(new Response {
                         StatusCode = webRequest.responseCode,
@@ -30,6 +37,7 @@ namespace BlogApp
                     });
                 }
                 
+                // subsequent checks to return network response
                 if(webRequest.isDone)
                 {
                     string data = System.Text.Encoding.UTF8.GetString(webRequest.downloadHandler.data);
@@ -42,11 +50,15 @@ namespace BlogApp
             }
         }
 
+        /// <summary>
+        ///Generic template for a HTTP Post request to the restful POST API
+        /// </summary>
         public IEnumerator HttpPost(string url, System.Action<Response> callback, IEnumerable<RequestHeader> headers = null, WWWForm form = null)
         {
-            
+            // create object og UnityWebRequest
             using(UnityWebRequest webRequest = UnityWebRequest.Post(url, form))
             {
+                // Set headers
                 if(headers != null)
                 {
                     foreach (RequestHeader header in headers)
@@ -57,8 +69,10 @@ namespace BlogApp
 
                 webRequest.uploadHandler.contentType = defaultContentType;               
 
+                // wait for result
                 yield return webRequest.SendWebRequest();
 
+                // subsequent checks to determine network error
                 if(webRequest.isNetworkError)
                 {
                     callback(new Response {
@@ -66,7 +80,8 @@ namespace BlogApp
                         Error = webRequest.error
                     });
                 }
-                
+
+                // subsequent checks to return network response
                 if(webRequest.isDone)
                 {
                     
