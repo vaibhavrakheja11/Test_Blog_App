@@ -28,12 +28,15 @@ namespace BlogApp
 
         GameObject currentObject;
 
+        public void OnEnable()
+        {
+            AppController.Instance.m_apiHandler.GenerateBlogCards += GenerateCards;
+        }
+
         public void Start()
         {
-            AppController.Instance.m_apiHandler.HandleAllBlogsEvent();
-            
             AppController.Instance.m_apiHandler.GenerateBlogCards += GenerateCards;
-
+            AppController.Instance.m_apiHandler.HandleAllBlogsEvent();
             foreach(GameObject loader in m_gameScreenLoader)
             {
                 m_currentTip.Enqueue(loader);
@@ -42,9 +45,23 @@ namespace BlogApp
             currentObject.SetActive(true);
         }
 
-        public void ReturnToHomeScreen()
+        public void RefreshHomeScreen()
         {
             AppController.Instance.m_apiHandler.HandleAllBlogsEvent();
+            SpawnItem[] contents = Content.gameObject.GetComponentsInChildren<SpawnItem>();
+            ScrollScript scrollScript = gameObject.GetComponentInChildren<ScrollScript>();
+            scrollScript.ResetPagination();
+            scrollScript.scrollView.verticalNormalizedPosition = 0.9f;
+            foreach(var con in contents)
+            {
+                Destroy(con.gameObject);
+            }
+            if(!LoaderObject.active)
+            {
+                LoaderObject.SetActive(true);
+                Footer.SetActive(false);
+            }
+            
         }
 
         public void GenerateCards(BlogsDataResponse blogsDataResponse)
@@ -76,22 +93,25 @@ namespace BlogApp
 
         public void GenerateItem(GameObject scrollContent, ScrollScript scrollScript, int num)
         {   
-            Debug.Log("Scope is here");
             if(LoaderObject.active)
             {
                 LoaderObject.SetActive(false);
                 Footer.SetActive(true);
             }
 
-            if(m_blogsDataResponse.data[num].image != null)
+            if(m_blogsDataResponse.data != null)
             {
                 GameObject scrollItemObj = Instantiate(scrollItemPrefab);
                 scrollItemObj.transform.SetParent(scrollContent.transform, false);
                 SpawnItem spawnItem = scrollItemObj.GetComponent<SpawnItem>();
                 spawnItem.m_blogData = m_blogsDataResponse.data[num];
+                
                 try 
                 {
-                    StartCoroutine(setImage(m_blogsDataResponse.data[num].image.file_sizes.thumb.url, m_blogsDataResponse.data[num], spawnItem));
+                    if(m_blogsDataResponse.data[num].image != null)
+                    {
+                        StartCoroutine(setImage(m_blogsDataResponse.data[num].image.file_sizes.thumb.url, m_blogsDataResponse.data[num], spawnItem));
+                    }
                 }
                 catch
                 {

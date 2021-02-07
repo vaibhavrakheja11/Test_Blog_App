@@ -33,7 +33,7 @@ namespace BlogApp
             if(blog.image!=null)
             {
                 AppController.Instance.m_viewController.m_homeScreenController.gameObject.SetActive(true);
-                AppController.Instance.m_viewController.m_homeScreenController.ReturnToHomeScreen();
+                AppController.Instance.m_viewController.m_homeScreenController.RefreshHomeScreen();
                 this.gameObject.SetActive(false);
             }
         }

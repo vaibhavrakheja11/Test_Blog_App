@@ -184,7 +184,6 @@ namespace BlogApp
         {
             if(response.Error!=null)
             {
-                Debug.Log(response.Error);
                 AppController.Instance.m_viewController.m_errorUIController.ShowError(response.Error.ToString());
             }
             else

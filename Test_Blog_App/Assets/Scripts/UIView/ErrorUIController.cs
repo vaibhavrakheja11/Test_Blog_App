@@ -26,9 +26,10 @@ public class ErrorUIController : MonoBehaviour
     {
         LeanTween.move( m_errorBox, m_targetTransform.transform, 1f);
         m_errorText.text = error;
+        StartCoroutine(HideErrorSeconds()); 
     }
 
-    void HideError()
+    public void HideError()
     {
         LeanTween.move( m_errorBox, m_originalTransform.transform, 1f);
     }
