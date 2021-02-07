@@ -443,7 +443,7 @@ ScriptsOnlyBuild:
     className: TMP_SpriteAnimator
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: ccbdb5af2ef6a9ce42ebc9d72c136373
     assemblyName: Assembly-CSharp.dll
     namespaceName: BlogApp
     className: LoginController
@@ -527,7 +527,7 @@ ScriptsOnlyBuild:
     className: Physics2DRaycaster
   - hash:
       serializedVersion: 2
-      Hash: 87c1ed04e60e4e55a11c7738649f9364
+      Hash: e56426295666469bd6658d7f27b53833
     assemblyName: Assembly-CSharp.dll
     namespaceName: BlogApp
     className: ViewController
@@ -569,7 +569,7 @@ ScriptsOnlyBuild:
     className: BeforeAfterTestCommandState
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: dd18b344599be027a870345833b916fd
     assemblyName: Assembly-CSharp.dll
     namespaceName: BlogApp
     className: APIHandler
