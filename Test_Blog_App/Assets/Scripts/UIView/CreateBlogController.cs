@@ -10,6 +10,7 @@ namespace BlogApp
 {
     public class CreateBlogController : MonoBehaviour
     {
+        
         public RawImage m_rawImage;
 
         string m_title;

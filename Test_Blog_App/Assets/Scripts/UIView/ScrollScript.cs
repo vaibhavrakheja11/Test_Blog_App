@@ -11,6 +11,7 @@ namespace BlogApp
         public GameObject scrollContent;
         int m_pageNumber;
 
+
         [SerializeField]
         HomeScreenController m_homePageController = new HomeScreenController();
 

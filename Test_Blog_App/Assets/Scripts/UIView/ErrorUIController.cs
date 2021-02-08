@@ -17,6 +17,7 @@ public class ErrorUIController : MonoBehaviour
     [SerializeField] 
     TextMeshProUGUI m_errorText;
     
+    
     /// <summary>
     /// This method is responsible to initiate error to it original position
     /// </summary>

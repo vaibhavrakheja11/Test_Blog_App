@@ -13,6 +13,7 @@ namespace BlogApp
         public GameObject Content;
         public GameObject scrollItemPrefab;
 
+
         BlogsDataResponse m_blogsDataResponse;
 
         [SerializeField]

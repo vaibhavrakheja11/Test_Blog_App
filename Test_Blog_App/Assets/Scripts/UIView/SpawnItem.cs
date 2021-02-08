@@ -21,6 +21,7 @@ namespace BlogApp
         [SerializeField] 
         TextMeshProUGUI m_authorText;
 
+
         [SerializeField] 
         TextMeshProUGUI m_dateText;
 

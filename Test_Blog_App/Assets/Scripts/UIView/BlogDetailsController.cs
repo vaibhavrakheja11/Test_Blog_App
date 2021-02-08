@@ -31,6 +31,7 @@ namespace BlogApp
         [SerializeField] 
         RawImage m_rawImage;
 
+
         /// <summary>
         /// This method is responsible to Show Details of the blog
         /// </summary>

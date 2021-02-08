@@ -41,6 +41,7 @@ namespace BlogApp
         /// </summary>
         public void HandleLoginEvent()
         {
+            
             // send a get request
             //StartCoroutine(AppController.Instance.m_restWebClient.HttpGet($"{baseUrl}", (r) => OnRequestComplete(r)));
 

@@ -7,6 +7,7 @@ namespace BlogApp
 {
     public class RestWebClient : MonoBehaviour
     {
+        
         const string defaultContentType = "application/json";
 
         /// <summary>

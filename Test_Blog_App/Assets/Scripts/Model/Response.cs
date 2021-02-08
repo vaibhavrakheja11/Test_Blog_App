@@ -5,6 +5,7 @@ using System;
 
 namespace BlogApp
 {
+    
     /// <summary>
     ///  class to generate json serialize web request response
     ///</summary>
