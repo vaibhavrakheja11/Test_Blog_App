@@ -843,4 +843,4 @@ ScriptsOnlyBuild:
   platform: 13
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
-  playerPath: /Users/vaibhavrakheja/Documents/Test_Blog_App/Test_Blog_App/Builds/BlogApp0.0.1.apk
+  playerPath: /Users/vaibhavrakheja/Documents/Test_Blog_App/Test_Blog_App/Builds/BlogApp0.0.2.apk

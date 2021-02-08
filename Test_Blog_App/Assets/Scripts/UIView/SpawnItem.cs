@@ -24,6 +24,9 @@ namespace BlogApp
         [SerializeField] 
         TextMeshProUGUI m_dateText;
 
+        /// <summary>
+        /// This method is responsible to handle Blog Details Button
+        /// </summary>
         public void HandleBlogDetailsEvent()
         {
             AppController.Instance.m_viewController.m_homeScreenController.ShowDetails(m_blogData, rawImage.texture);

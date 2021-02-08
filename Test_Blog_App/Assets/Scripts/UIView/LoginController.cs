@@ -48,27 +48,40 @@ namespace BlogApp
             return m_name;
         }
 
+        /// <summary>
+        /// This method is responsible to handle login button
+        /// </summary>
         public void HandleLoginEvent()
         {
             AppController.Instance.m_apiHandler.HandleLoginEvent();
         }
 
+        /// <summary>
+        /// This method is responsible to open sign up page
+        /// </summary>
         public void HandleSignUpButton()
         {
             this.m_loginPanel.SetActive(false);
             this.m_signUpPanel.SetActive(true);
         }
 
+        /// <summary>
+        /// This method is responsible to handle Sign up button event
+        /// </summary>
         public void HandleSignUpEvent()
         {
             AppController.Instance.m_apiHandler.HandleSignUpEvent();
         }
 
+        
         void OnEnable()
         {
             AppController.Instance.m_apiHandler.GetAuthData += GetAuthData;
         }
 
+        /// <summary>
+        /// This method is responsible to handle auth data
+        /// </summary>
         public void GetAuthData(ResponseData authData = null)
         {
             if(authData.token != null)
@@ -80,6 +93,9 @@ namespace BlogApp
             
         }
 
+        /// <summary>
+        /// This method is responsible to handle cancel button 
+        /// </summary>
         public void HandleCancelLoginSignupEvent()
         {
             AppController.Instance.m_viewController.m_homeScreenController.gameObject.SetActive(true);

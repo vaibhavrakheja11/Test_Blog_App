@@ -5,6 +5,9 @@ using System;
 
 namespace BlogApp
 {
+    /// <summary>
+    ///  Serializable class to generate headers
+    ///</summary>
     [Serializable] 
     public class RequestHeader
     {
