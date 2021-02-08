@@ -5,9 +5,6 @@ using System;
 
 namespace BlogApp
 {
-    /// <summary>
-    ///  class to generate json serialize web request response
-    ///</summary>
     public class Response
     {
         public long StatusCode { get; set; }
@@ -19,9 +16,6 @@ namespace BlogApp
         public Dictionary<string, string> Headers {get; set;} 
     }
 
-    /// <summary>
-    ///  class to generate json serialize web request response data
-    ///</summary>
     [Serializable] 
     public class ResponseData
     {
@@ -30,10 +24,7 @@ namespace BlogApp
         public User user;
         
     }
-    
-    /// <summary>
-    ///  class to generate json serialize web request response for user details
-    ///</summary>
+
     [Serializable] 
     public class User 
     {
@@ -46,9 +37,6 @@ namespace BlogApp
         public string gender;
     }
 
-    /// <summary>
-    ///  class to generate json serialize web request response of all blogs data
-    ///</summary>
     [Serializable] 
     public class BlogsDataResponse
     {
@@ -59,9 +47,7 @@ namespace BlogApp
         public BlogsData[] data;
     }
 
-    /// <summary>
-    ///  class to generate json serialize web request response response of blog details
-    ///</summary>
+
     [Serializable] 
     public class BlogsData
     {
@@ -78,10 +64,7 @@ namespace BlogApp
         public Image image;
         
     }
-    
-    /// <summary>
-    ///  class to generate json serialize web request response response of blog image details
-    ///</summary>
+
     [Serializable] 
     public class Image
     {
@@ -92,10 +75,7 @@ namespace BlogApp
         public string original_name;
         public FileSize file_sizes;
     }
-    
-    /// <summary>
-    ///  class to generate json serialize web request response response of blog image sizes
-    ///</summary>
+
     [Serializable] 
     public class FileSize 
     {

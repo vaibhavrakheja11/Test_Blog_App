@@ -8,27 +8,21 @@ using System.IO;
 namespace BlogApp
 {    public class APIHandler : MonoBehaviour
     {
-        // Base url
         [SerializeField]
         private const string BASE_URL = "http://cms.iversoft.ca/";
 
-        // public api key to be stored here
         [SerializeField]
         string m_apiKey = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhcHBfa2V5IjoiYmFzZTY0OlZtRmtjUXZKK1AyYWZCQW9TcmRlSmVOMjVCWE56alBlZGJVaWxl"+
                 "MTVISE09IiwiaXNzIjoiaHR0cDovL2Ntcy5pdmVyc29mdC5jYSIsImlhdCI6MTYxMTA4NzY"+
                 "yNCwiZXhwIjoxNjExMTE2NDI0LCJuYmYiOjE2MTEwODc2MjQsImp0aSI6IjZWVUU5cDJhVWN3VXpBV3UifQ.OCa6XhRZ5OhQ7H-XgI4WgwWM0rsmBk5GZnfa8zGJAkc";
 
-        // TODO : use list of headers to generate headers for the api
         [SerializeField]
         List<RequestHeader> m_headers = new List<RequestHeader>();
 
-        // Authorized data of a user
         ResponseData m_authData = new ResponseData();
 
-        // All Blogs response data structure
         BlogsDataResponse m_blogsDataResponse = new BlogsDataResponse();
 
-        //Public events to be invoked
         public Action<ResponseData> GetAuthData;
 
         public Action<BlogsData> GetNewBlogData;
@@ -36,9 +30,7 @@ namespace BlogApp
         public Action<BlogsDataResponse> GenerateBlogCards;
 
         
-        /// <summary>
-        /// This method is responsible to set headers and web request for login
-        /// </summary>
+        
         public void HandleLoginEvent()
         {
             // send a get request
@@ -61,22 +53,14 @@ namespace BlogApp
             };
 
             // TODO:: Send parameters in here in place of argument string
-
             // send a post request
             StartCoroutine(AppController.Instance.m_restWebClient.HttpPost($"{BASE_URL}api/authenticate?email="+AppController.Instance.m_viewController.m_loginController.GetUsername()
             +"&password="+AppController.Instance.m_viewController.m_loginController.GetPassword(), 
             (r) => OnLoginAuthComplete(r), new List<RequestHeader> { header, header2,header3 }));
         }
 
-        /// <summary>
-        /// This method is responsible to set headers and web request for Signup
-        /// </summary>
         public void HandleSignUpEvent()
         {
-            const string EMAIL = "email";
-            const string NAME = "name";
-            const string PASSWORD = "password";
-
             // setup the request header
             RequestHeader header2 = new RequestHeader {
                 Key = "Accept",
@@ -88,20 +72,16 @@ namespace BlogApp
                 Value = m_apiKey
             };
 
-            // Generate a www form that would contain the body of the request
             WWWForm form = new WWWForm();
-            form.AddField(NAME, AppController.Instance.m_viewController.m_loginController.GetName());
-            form.AddField(EMAIL, AppController.Instance.m_viewController.m_loginController.GetUsername());
-            form.AddField(PASSWORD, AppController.Instance.m_viewController.m_loginController.GetPassword());
+            form.AddField("name", AppController.Instance.m_viewController.m_loginController.GetName());
+            form.AddField("email", AppController.Instance.m_viewController.m_loginController.GetUsername());
+            form.AddField("password", AppController.Instance.m_viewController.m_loginController.GetPassword());
         
             // send a post request
             StartCoroutine(AppController.Instance.m_restWebClient.HttpPost($"{BASE_URL}api/users/new", 
             (r) => OnSignUpComplete(r), new List<RequestHeader> {header2,header3 }, form));
         }
-        
-        /// <summary>
-        /// This method the success event of the Login Web request
-        /// </summary>
+
         void OnLoginAuthComplete(Response response)
         {   
             if(response.Error!=null)
@@ -122,13 +102,11 @@ namespace BlogApp
             return m_authData;
         }
 
-        /// <summary>
-        /// This method the success event of the Signup Web request
-        /// </summary>
         void OnSignUpComplete(Response response)
         {
             if(response.Error!=null)
             {
+                Debug.Log(response.Error);
                 AppController.Instance.m_viewController.m_errorUIController.ShowError(response.Error.ToString());
             }
             else
@@ -138,10 +116,6 @@ namespace BlogApp
             }
             
         }
-
-        /// <summary>
-        /// This method is responsible to set headers and web request for All Blogs service request
-        /// </summary>
         public void HandleAllBlogsEvent()
         {
 
@@ -157,15 +131,11 @@ namespace BlogApp
             };
 
             // TODO:: Send parameters in here in place of argument string
-
             // send a post request
             StartCoroutine(AppController.Instance.m_restWebClient.HttpGet($"{BASE_URL}api/blog/list", 
             (r) => OnBlogsRecieved(r), new List<RequestHeader> {header2,header3}));
         }
-        
-        /// <summary>
-        /// This method the success event of the All Blogs Web request
-        /// </summary>
+
         void OnBlogsRecieved(Response response)
         {
             if(response.Error!=null)
@@ -180,12 +150,6 @@ namespace BlogApp
             }
         }
 
-        /// <summary>
-        /// This method is responsible to set headers and web request for create blog web request
-        ///<parameters>
-        /// Bytes - byte array of image of the blog, title - string title of blog, content - string content of blog
-        ///</parameters>
-        /// </summary>
         public void CreateBlog(byte[] bytes, string title, string content)
         {
             // Create a Web Form
@@ -216,9 +180,6 @@ namespace BlogApp
             (r) => OnCreateBlogComplete(r), new List<RequestHeader> {header2,header3,header}, form));
         }
 
-        /// <summary>
-        /// This method the success event of the create blog request
-        /// </summary>
         void OnCreateBlogComplete(Response response)
         {
             if(response.Error!=null)
@@ -236,9 +197,6 @@ namespace BlogApp
         }
     }
 
-    /// <summary>
-    /// public class for Sign Up and Login credentail datatypes
-    /// </summary>    
     public class SignUpCredentials
     {
         public string name;
@@ -246,9 +204,6 @@ namespace BlogApp
         public string password;
     }
 
-    /// <summary>
-    /// WIP : Enum header arguement to generate headers 
-    /// </summary>
     public enum HeaderArgument
     {
         API_KEY,

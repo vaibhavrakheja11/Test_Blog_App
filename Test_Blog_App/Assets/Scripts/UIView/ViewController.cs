@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace BlogApp
 {
-    // class to reference UI controllers
     public class ViewController : MonoBehaviour
     {
         public LoginController m_loginController;

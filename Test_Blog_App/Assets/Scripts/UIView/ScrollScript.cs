@@ -24,9 +24,7 @@ namespace BlogApp
             AppController.Instance.m_apiHandler.GenerateBlogCards += StartLoader;
         }
 
-        /// <summary>
-        /// This method is responsible for UI side pagination
-        /// </summary>
+        // Start is called before the first frame update
         public void NextPage()
         {
             m_blogCards += 5;
@@ -37,11 +35,9 @@ namespace BlogApp
             m_updateViewport = false;
         }
 
-
         // Update is called once per frame
         void Update()
         {
-            // Check for page end to generate more content
             if(scrollView.verticalNormalizedPosition < 0 && scrollView.verticalNormalizedPosition > -0.5 )
             {
                 m_updateViewport = true;
@@ -50,34 +46,22 @@ namespace BlogApp
             {
                 NextPage();
             }
-
-            // check for pull-to-refresh
             if(scrollView.verticalNormalizedPosition > 1.1)
             {
                 AppController.Instance.m_viewController.m_homeScreenController.RefreshHomeScreen();
             } 
         }
 
-        /// <summary>
-        /// This method is responsible for initiating the loader
-        /// </summary>
         void StartLoader(BlogsDataResponse blogsDataResponse = null)
         {
             StartCoroutine(Loader());
         }
-
-        /// <summary>
-        /// This method is responsible for wait before loader is disable
-        /// </summary>
         IEnumerator Loader()
         {
             yield return new WaitForSeconds(6f);
             NextPage();
         }
 
-        /// <summary>
-        /// This method is responsible for resetting pagination
-        /// </summary>
         public void ResetPagination()
         {
             m_counter = 0;
